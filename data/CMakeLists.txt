@@ -1,3 +1,10 @@
-add_executable(showbyte showbyte.c)
-add_executable(isLittleEndian isLittleEndian.c)
+add_library(showbyte showbyte.c)
+target_include_directories(showbyte PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+add_library(islittleendian SHARED isLittleEndian.c)
+target_include_directories(islittleendian PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
 add_executable(mergeLastByte MergeLastByte.c)
+
+add_executable(replaceByte ReplaceByte.c)
+target_link_libraries(replaceByte PRIVATE showbyte islittleendian)

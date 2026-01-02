@@ -20,11 +20,11 @@ void showBytes(byte_pointer start, size_t len) {
 word mergeLastByte(word x, word y) {
     word ret = (x & 0x000000FF) | (y & 0xFFFFFF00);
     printf("x:\t");
-    showBytes(&x, sizeof(word));
+    showBytes((byte_pointer)&x, sizeof(word));
     printf("y:\t");
-    showBytes(&y, sizeof(word));
+    showBytes((byte_pointer)&y, sizeof(word));
     printf("ret:\t");
-    showBytes(&ret, sizeof(word));
+    showBytes((byte_pointer)&ret, sizeof(word));
     return ret;
 }
 
