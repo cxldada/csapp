@@ -65,9 +65,27 @@ void ex2_61() {
     }
 }
 
+int int_shifts_are_arithmetic() {
+    int ret = 0;
+    int mask = ~0;
+    ret = (mask >> 8 == mask);
+    printf("int shifts are arithmetic: [%d]\n", ret);
+    return ret;
+
+    // 用无符号模拟逻辑右移
+    // unsigned test = ~0;
+    // ret = (test >> 8 == test);
+    // printf("int shifts are arithmetic: [%d]\n", ret);
+    // return ret;
+}
+
 int main(int argc, char *argv[]) {
     START("2.61");
     ex2_61();
+    END();
+
+    START("2.62");
+    int_shifts_are_arithmetic();
     END();
 
     return 0;
