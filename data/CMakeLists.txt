@@ -8,3 +8,6 @@ add_executable(mergeLastByte MergeLastByte.c)
 
 add_executable(replaceByte ReplaceByte.c)
 target_link_libraries(replaceByte PRIVATE showbyte islittleendian)
+
+add_executable(homework homework.c)
+target_link_libraries(homework PRIVATE showbyte islittleendian)
