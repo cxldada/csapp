@@ -79,6 +79,47 @@ int int_shifts_are_arithmetic() {
     // return ret;
 }
 
+unsigned srl(unsigned x, int k) {
+    unsigned xsra = (int)x >> k;
+    return xsra & (~0U >> k);
+}
+
+int sra(int x, int k) {
+    size_t w = sizeof(x) << 3;
+    int xsrl = (unsigned)x >> k;
+    unsigned sign = x >> (w - 1);
+    unsigned mask = sign << (w - k);
+    return xsrl | mask;
+}
+
+void test2_63() {
+    unsigned a = 0x12345678;
+    unsigned ret = srl(a, 0);
+    printf("%u >> %d = %u\n", a, 0, ret);
+    show_bits((byte_pointer)&a, sizeof(unsigned));
+    show_bits((byte_pointer)&ret, sizeof(unsigned));
+    a = 0xFF123456;
+    ret = srl(a, 4);
+    printf("%u >> %d = %u\n", a, 4, ret);
+    show_bits((byte_pointer)&a, sizeof(unsigned));
+    show_bits((byte_pointer)&ret, sizeof(unsigned));
+
+    int b = 0x12345678;
+    int ret2 = sra(b, 2);
+    printf("%d >> %d = %d\n", b, 2, ret2);
+    show_bits((byte_pointer)&b, sizeof(unsigned));
+    show_bits((byte_pointer)&ret2, sizeof(unsigned));
+    b = 0xFF123456;
+    ret2 = sra(b, 4);
+    printf("%d >> %d = %d\n", b, 4, ret2);
+    show_bits((byte_pointer)&b, sizeof(unsigned));
+    show_bits((byte_pointer)&ret2, sizeof(unsigned));
+}
+
+int any_odd_one(unsigned x) { return !!(x & 0xAAAAAAAA); }
+
+int odd_ones(unsigned x) {}
+
 int main(int argc, char *argv[]) {
     START("2.61");
     ex2_61();
@@ -87,6 +128,19 @@ int main(int argc, char *argv[]) {
     START("2.62");
     int_shifts_are_arithmetic();
     END();
+
+    START("2.63");
+    test2_63();
+    END();
+
+    START("2.64");
+    unsigned x = 0x00000002;
+    printf("any_odd_one(0x%.2x) = %d", x, any_odd_one(x));
+    END();
+
+    // START("2.65");
+    // odd_ones(0xFFFF0000);
+    // END();
 
     return 0;
 }
